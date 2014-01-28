@@ -9,6 +9,20 @@ from oauthlib.oauth1.rfc5849.signature import (collect_parameters,
 
 
 def validate_request(request, consumer_getter):
+    """Checks whether the request has come from an authorized consumer
+
+    The `request` object is an instance of the twolegged.Request class
+    and is framework agnostic. `consumer_getter` is a simple function
+    to lookup a consumer from it's key.
+
+    If the request is invalid for any reason other than non-matching
+    signatures, a `InvalidRequest` exception will be raised.
+
+    :param request         : a twolegged.Request subclass
+    :param consumer_getter : function
+    :rtype                 : boolean
+
+    """
     headers = request.headers()
     auth_header = headers.get('Authorization')
     request_values = request.values()
@@ -32,6 +46,16 @@ def validate_request(request, consumer_getter):
 
 
 def build_signature(request, consumer_secret):
+    """Uses the request object and consumer secret to build a signature
+
+    This is an internal function and it's highly unlikely than an end
+    user would ever need to call this
+
+    :param request         : a twolegged.Request subclass
+    :param consumer_secret : string
+    :rtype                 : string
+
+    """
     headers = request.headers()
     auth_headers = {k: v for k, v in headers.iteritems() if k == 'Authorization'}
     body = request.form_data()
@@ -48,6 +72,15 @@ def build_signature(request, consumer_secret):
 
 
 class Request(object):
+    """Interface that the functions of this lib understand
+
+    User's of this lib must subclass this class and implement the
+    interface. This helps to keep the lib framework agnostic. For
+    eg. if you are using django, create a class that would expose
+    required aspects of a django request as per this interface which
+    this library understands
+
+    """
 
     def base_url(self):
         """Base URL of the request
@@ -99,4 +132,8 @@ class Request(object):
 
 
 class InvalidRequest(Exception):
+    """Will be raised if the request is invalid for some reason other than
+    non-matching signatures
+
+    """
     pass
