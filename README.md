@@ -1,7 +1,7 @@
 Twolegged
 =========
 
-**Important Note: Project under WIP!**
+**Important Note: WIP!**
 
 A framework agnostic library for implementing two-legged
 authentication to secure internal APIs by verifying signed requests
