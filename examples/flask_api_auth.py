@@ -1,4 +1,5 @@
-"""Module that handles API authentication (simple 2 legged auth)
+"""Module that handles API authentication (simple 2 legged auth) in
+Flask
 
 """
 
@@ -11,18 +12,20 @@ import app
 from twolegged import validate_request, InvalidRequest, Request
 
 
+## for the sake of a simple example, the consumer credentials will
+## be loaded from a file
 def load_consumers():
-    # for the sake of a simple example, the consumer credentials will
-    # be loaded from a file
     with open(app.config['AUTH_API_CONSUMERS_FILE']) as f:
         lines = (map(unicode, x.strip().split(':')) for x in f)
         return [{u'key': key, u'secret': secret} for key, secret in lines]
 
 
-# consumer credentials are loaded and kept in memory
+## consumer credentials are loaded and kept in memory
 _consumers = load_consumers()
 
 
+## This function will be passed as the `consumer_getter` argument to
+## `validate_request`
 def get_consumer(key):
     """Gets a consumer by it's key
 
@@ -36,6 +39,8 @@ def get_consumer(key):
         return None
 
 
+## This class implements the twolegged.Request interface and will wrap
+## the Flask request object
 class FlaskRequest(Request):
     """Class to wrap the Flask request object in another object with an
     interface that the twolegged auth functions recognize
