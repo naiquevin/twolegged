@@ -1,7 +1,7 @@
 Twolegged
 =========
 
-** Important Note: Project under WIP! **
+**Important Note: Project under WIP!**
 
 A framework agnostic library for implementing two-legged
 authentication to secure internal APIs by verifying signed requests
@@ -12,21 +12,20 @@ Why?
 ----
 
 I was looking for something better than
-[http://en.wikipedia.org/wiki/Security_through_obscurity](Security
-through obscurity) to secure internal RESTful APIs without the need
-for,
+[Security through obscurity](http://en.wikipedia.org/wiki/Security_through_obscurity)
+to secure internal RESTful APIs without the need for,
 
-1. users to grant access to the client (as the data is not tied to any
-   resource owners)
+1. users to grant access to the client (as the data is not tied to
+   resource owners).
 2. the clients to obtain temporary access tokens (as in case of
-   "Client credentials auth flow" of Oauth 2.0) from the server as
-   both servers and clients are entirely controlled by us
+   "Client Credentials Auth Flow" of Oauth 2.0) from the server as
+   both servers and clients are entirely controlled by us.
 
 Since I was working with Flask, the first thing I tried was
 [Flask-oauthlib](https://flask-oauthlib.readthedocs.org/en/latest/)
-which supports full featured OAuth 1.0 and 2.0 flows and it was quite
-tricky to fit a simple two-legged flow into them. So, I wrote a couple
-of functions to verify a signed request using existing libraries.
+which supports three-legged OAuth 1 flow and it was quite tricky to
+fit a simple two-legged flow into it. So, I wrote a couple of
+functions to verify a signed request using existing libraries.
 
 
 Dependencies
@@ -48,8 +47,8 @@ Let's first briefly understand the flow before getting to the usage:
    secret to verify the signed request.
 
 We will get to point 1 later. For point 2, all that's required is a
-call to the function ``twolegged.validate_request` which abstracts
-verfication of the request.
+call to the function ``twolegged.validate_request`` which abstracts
+away the verfication of the request.
 
 ``validate_request`` takes two arguments:
 
@@ -65,10 +64,10 @@ verfication of the request.
 - Second, a function (``consumer_getter``) that takes a string which
   is the ``key`` or the unique identifier of the consumer. The job of
   this function is to use the identifier to lookup a consumer from
-  whichever storage your application might be using eg. postgresql, a
-  text file etc. and return a dict with the fields "key" and
-  "secret". If a consumer with the given key is not found, it should
-  return ``None``
+  whichever storage your application might be using eg. relational
+  database, a text file etc. and return a dict with the fields "key"
+  and "secret". If a consumer with the given key is not found, it
+  should return ``None``
 
 See the example implementation for Flask in
 ``examples/flask_api_auth.py`` which loads the consumer info from a
@@ -100,7 +99,7 @@ store a key-secret pair at their end and so it's best suited for
 communication between a backend server and a front app
 server. **DONOT** use this method if your application resides on the
 user's device/machine or the source code is distributed to the users
-which may cause the secret to be exposed. In that case, the Client
+which might cause the secret to be exposed. In that case, the Client
 credentials flow of OAuth 2.0 might help.
 
 
