@@ -91,8 +91,7 @@ library by specifying both the resource owner key and secret as
 Todo
 ----
 
-1. Add example for Django
-2. Write tests
+1. Write tests
 
 
 Caveat
