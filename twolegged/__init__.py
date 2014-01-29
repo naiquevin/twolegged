@@ -85,7 +85,7 @@ class Request(object):
     def base_url(self):
         """Base URL of the request
 
-        :rtype : string
+        :rtype : unicode
 
         """
         raise NotImplementedError
