@@ -63,7 +63,7 @@ class FlaskRequest(Request):
         return self._req.args.lists()
 
     def form_data(self):
-        return self._req.form.to_dict()
+        return self._req.form.lists()
 
     def values(self):
         return self._req.values

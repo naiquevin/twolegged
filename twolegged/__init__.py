@@ -109,7 +109,7 @@ class Request(object):
     def params(self):
         """GET parameters
 
-        :rtype : dict like object
+        :rtype : list/iterable of key-val pairs
 
         """
         raise NotImplementedError
@@ -117,7 +117,7 @@ class Request(object):
     def form_data(self):
         """POST data
 
-        :rtype : dict like object
+        :rtype : list/iterable of key-val pairs
 
         """
         raise NotImplementedError
