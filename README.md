@@ -61,13 +61,17 @@ away the verfication of the request.
   interface eg. the thread local Flask request object or the Django
   request object passed as an arg to the views. This way, the lib can
   be used with any framework.
+
+  **Note: All values including the list items and key-values in dicts
+  returned by these methods must be unicode**
+
 - Second, a function (``consumer_getter``) that takes a string which
   is the ``key`` or the unique identifier of the consumer. The job of
   this function is to use the identifier to lookup a consumer from
   whichever storage your application might be using eg. relational
   database, a text file etc. and return a dict with the fields "key"
-  and "secret". If a consumer with the given key is not found, it
-  should return ``None``
+  and "secret", **both as unicode**. If a consumer with the given key
+  is not found, it should return ``None``
 
 See the example implementation for Flask in
 ``examples/flask_api_auth.py`` which loads the consumer info from a

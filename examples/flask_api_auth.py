@@ -51,6 +51,8 @@ class FlaskRequest(Request):
         self._req = req
 
     def base_url(self):
+        ## Flask provides the base_url as an attribute of the request,
+        ## so we can just return that
         return self._req.base_url
 
     def method(self):

@@ -58,6 +58,8 @@ def build_signature(request, consumer_secret):
     """
     headers = request.headers()
     auth_headers = {k: v for k, v in headers.iteritems() if k == 'Authorization'}
+    # we are only interested in the POST data if it's passed as form
+    # parameters while raw POST body is ignored
     body = request.form_data()
     params = [(k, v) for k, v in request.params() if k != 'oauth_signature']
     qs = RequestEncodingMixin._encode_params(params)
